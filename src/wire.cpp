@@ -132,7 +132,6 @@ std::shared_ptr<Item> decode_item(const std::string &s) {
   auto parts = Util::split(s, ':');
   if (parts.size() != 5)
     throw InvalidMessage("invalid item encoding");
-
   int order_id = parse_positive_int(parts[0]);
   int item_id = parse_positive_int(parts[1]);
   auto item_status_it = s_str_to_item_status.find(parts[2]);
@@ -141,7 +140,6 @@ std::shared_ptr<Item> decode_item(const std::string &s) {
     status = item_status_it->second;
   if (status == ItemStatus::INVALID)
     throw InvalidMessage("invalid item status");
-
   int qty = parse_positive_int(parts[4]);
   return std::make_shared<Item>(order_id, item_id, status, parts[3], qty);
 }
@@ -167,7 +165,6 @@ std::shared_ptr<Order> decode_order(const std::string &s) {
   auto item_strs = Util::split(parts[2], ';');
   for (const auto &item_str : item_strs)
     order->add_item(decode_item(item_str));
-
   return order;
 }
 
