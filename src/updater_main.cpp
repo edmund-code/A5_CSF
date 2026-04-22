@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 
   try {
 
-    //get login credentials from user
+    // get login credentials from user
     std::string username, password;
     std::cout << "username: ";
 
@@ -37,10 +37,10 @@ int main(int argc, char **argv) {
 
     std::string creds = username + "/" + password;
 
-    //send LOGIN as updater
+    // send login as updater
     send_msg(Message(MessageType::LOGIN, ClientMode::UPDATER, creds), fd);
 
-    //check server response
+    // check server response
     Message resp = recv_msg(fd);
     if (resp.get_type() == MessageType::ERROR) {
 
@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
       return 1;
     }
 
-    //main command loop
+      // main command loop
     while (true) {
 
       std::string cmd;
@@ -60,12 +60,12 @@ int main(int argc, char **argv) {
       if (cmd == "quit") {
 
         send_msg(Message(MessageType::QUIT), fd);
-        recv_msg(fd);  // recv OK
+        recv_msg(fd);  // recv ok
         break;
 
       } else if (cmd == "order_new") {
 
-        //read number of items
+        // read number of items
         std::string line;
         std::getline(std::cin, line);
         int num_items = std::stoi(line);

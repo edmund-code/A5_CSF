@@ -8,7 +8,7 @@
 
 namespace {
 
-// Private data and helper functions
+// private data and helper functions
 
 const std::unordered_map<ClientMode, std::string> s_client_mode_to_str = {
   { ClientMode::INVALID, "INVALID" },
@@ -83,7 +83,7 @@ std::string encode_item(const Item &item) {
   return std::to_string(item.get_order_id()) + ":" + std::to_string(item.get_id()) + ":" + s_item_status_to_str.at(item.get_status()) + ":" + item.get_desc() + ":" + std::to_string(item.get_qty());
 }
 
-// encode an order and all of its items into the comma/semicolon separated payload form
+// encode an order and all of its items into the comma semicolon separated payload form
 std::string encode_order(const std::shared_ptr<Order> &order) {
   assert(order);
   if (order->get_num_items() == 0)
@@ -99,7 +99,7 @@ std::string encode_order(const std::shared_ptr<Order> &order) {
   return result;
 }
 
-// Parse a base-10 integer and reject partial parses or other malformed values.
+// parse a base 10 integer and reject partial parses or other malformed values
 int parse_int(const std::string &s) {
   if (s.empty())
     throw InvalidMessage("invalid integer");

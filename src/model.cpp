@@ -35,8 +35,7 @@ Order::~Order() {
 Order &Order::operator=(const Order &rhs) {
   if (this != &rhs) {
     m_id = rhs.m_id;
-    // Duplicate all of the Items, so that this is
-    // a deep copy
+    // duplicate all of the items so that this is a deep copy
     for (auto i = rhs.m_items.begin(); i != rhs.m_items.end(); ++i)
       m_items.push_back((*i)->duplicate());
     m_status = rhs.m_status;

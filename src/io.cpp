@@ -50,7 +50,7 @@ int parse_len_prefix(const char prefix[4]) {
 } // end of anonymous namespace for helper functions
 
 namespace IO {
-
+// frame and write one encoded message string to the output descriptor
 void send(const std::string &s, int outfd) {
   // TODO: implement
   size_t framed_len = s.size() + 1;
@@ -65,6 +65,7 @@ void send(const std::string &s, int outfd) {
   write_exact(outfd, framed.data(), framed.size());
 }
 
+// read one framed message string from the input descriptor
 void receive(int infd, std::string &s) {
   // TODO: implement
   char prefix[4];

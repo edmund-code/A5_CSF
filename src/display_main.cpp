@@ -1,4 +1,6 @@
-//main program for the display client
+/*
+ * main program for the display client
+ */
 
 #include <iostream>
 #include <string>
@@ -16,12 +18,12 @@
 
 namespace {
 
-//this terminal escape sequence should be written to
-//std::cout before the display client redisplays the current
-//order info
+// this terminal escape sequence should be written to
+// std::cout before the display client redisplays the current
+// order info
 const char CLEAR_SCREEN[] = "\x1b[2J\x1b[H";
 
-//print all curr orders to stdout, cleag screen first
+// print all curr orders to stdout, clear screen first
 void print_all_orders(const std::map<int, std::shared_ptr<Order>> &orders) {
 
   std::cout << CLEAR_SCREEN;
@@ -67,7 +69,7 @@ int main(int argc, char **argv) {
 
   try {
 
-    //get login credentials from user
+    // get login credentials from user
     std::string username, password;
     std::cout << "username: ";
 
@@ -78,10 +80,10 @@ int main(int argc, char **argv) {
 
     std::string creds = username + "/" + password;
 
-    //send lgin as display client
+    // send login as display client
     send_msg(Message(MessageType::LOGIN, ClientMode::DISPLAY, creds), fd);
 
-    //check server response
+    // check server response
     Message resp = recv_msg(fd);
     if (resp.get_type() == MessageType::ERROR) {
 
@@ -91,14 +93,14 @@ int main(int argc, char **argv) {
       return 1;
     }
 
-    //clear screen on startup
+    // clear screen on startup
     std::cout << CLEAR_SCREEN;
     std::cout.flush();
 
-    //map of order id to order, sorted automatically;
+    // map of order id to order, sorted automatically;
     std::map<int, std::shared_ptr<Order>> orders;
 
-    //receive loop, server push update
+    // receive loop, server push update
     while (true) {
 
       Message msg = recv_msg(fd);

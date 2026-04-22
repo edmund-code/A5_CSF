@@ -2,7 +2,7 @@
 #include "wire.h"
 #include "io.h"
 
-//encode the message and send it over fd
+// encode the message and send it over fd
 void send_msg(const Message &msg, int fd) {
 
   std::string s;
@@ -11,7 +11,7 @@ void send_msg(const Message &msg, int fd) {
 
 }
 
-//receive a raw frame from fd and decode it into a msg
+// receive a raw frame from fd and decode it into a msg
 Message recv_msg(int fd) {
 
   std::string s;
