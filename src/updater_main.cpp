@@ -29,8 +29,10 @@ int main(int argc, char **argv) {
     //get login credentials from user
     std::string username, password;
     std::cout << "username: ";
+
     std::getline(std::cin, username);
     std::cout << "password: ";
+
     std::getline(std::cin, password);
 
     std::string creds = username + "/" + password;
@@ -41,8 +43,10 @@ int main(int argc, char **argv) {
     //check server response
     Message resp = recv_msg(fd);
     if (resp.get_type() == MessageType::ERROR) {
+
       std::cerr << "Error: " << resp.get_str() << "\n";
       close(fd);
+
       return 1;
     }
 
@@ -61,7 +65,7 @@ int main(int argc, char **argv) {
 
       } else if (cmd == "order_new") {
 
-        // read number of items
+        //read number of items
         std::string line;
         std::getline(std::cin, line);
         int num_items = std::stoi(line);
@@ -69,9 +73,11 @@ int main(int argc, char **argv) {
         auto order = std::make_shared<Order>(1, OrderStatus::NEW);
 
         for (int i = 0; i < num_items; i++) {
+
           std::string item_id_str, desc, qty_str;
           std::getline(std::cin, item_id_str);
           std::getline(std::cin, desc);
+
           std::getline(std::cin, qty_str);
 
           int item_id = std::stoi(item_id_str);
@@ -83,9 +89,12 @@ int main(int argc, char **argv) {
         send_msg(Message(MessageType::ORDER_NEW, order), fd);
 
         Message r = recv_msg(fd);
+
         if (r.get_type() == MessageType::OK) {
+
           std::cout << "Success: " << r.get_str() << "\n";
         } else {
+
           std::cout << "Failure: " << r.get_str() << "\n";
         }
 
@@ -103,9 +112,12 @@ int main(int argc, char **argv) {
         send_msg(Message(MessageType::ITEM_UPDATE, order_id, item_id, status), fd);
 
         Message r = recv_msg(fd);
+
         if (r.get_type() == MessageType::OK) {
+
           std::cout << "Success: " << r.get_str() << "\n";
         } else {
+
           std::cout << "Failure: " << r.get_str() << "\n";
         }
 
@@ -113,6 +125,7 @@ int main(int argc, char **argv) {
 
         std::string order_id_str, status_str;
         std::getline(std::cin, order_id_str);
+        
         std::getline(std::cin, status_str);
 
         int order_id = std::stoi(order_id_str);
@@ -155,6 +168,6 @@ int main(int argc, char **argv) {
   }
 
   close(fd);
-  
+
   return 0;
 }
