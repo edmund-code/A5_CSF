@@ -137,11 +137,11 @@ int main(int argc, char **argv) {
 
         if (r.get_type() == MessageType::OK) {
 
-          std::cout << "success: " << r.get_str() << "\n";
+          std::cout << "Success: " << r.get_str() << "\n";
 
         } else {
 
-          std::cout << "failure: " << r.get_str() << "\n";
+          std::cout << "Failure: " << r.get_str() << "\n";
         }
 
       }
