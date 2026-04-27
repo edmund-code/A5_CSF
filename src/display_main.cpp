@@ -91,6 +91,10 @@ int main(int argc, char **argv) {
       close(fd);
 
       return 1;
+    } else if (resp.get_type() != MessageType::OK) {
+      std::cerr << "Error: unexpected login response\n";
+      close(fd);
+      return 1;
     }
 
     // clear screen on startup
@@ -158,7 +162,7 @@ int main(int argc, char **argv) {
           break;
 
         default:
-          break;
+          throw ProtocolError("Unexpected message type for display client");
 
       }
 

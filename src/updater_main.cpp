@@ -48,6 +48,10 @@ int main(int argc, char **argv) {
       close(fd);
 
       return 1;
+    } else if (resp.get_type() != MessageType::OK) {
+      std::cerr << "Error: unexpected login response\n";
+      close(fd);
+      return 1;
     }
 
       // main command loop
@@ -60,7 +64,10 @@ int main(int argc, char **argv) {
       if (cmd == "quit") {
 
         send_msg(Message(MessageType::QUIT), fd);
-        recv_msg(fd);  // recv ok
+        Message quit_resp = recv_msg(fd);
+        if (quit_resp.get_type() != MessageType::OK) {
+          throw ProtocolError("Expected OK response to QUIT");
+        }
         break;
 
       } else if (cmd == "order_new") {
