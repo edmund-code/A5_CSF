@@ -90,8 +90,13 @@ void Client::updater_loop() {
 
     } else if (msg.get_type() == MessageType::ORDER_NEW) {
       std::shared_ptr<Order> order = msg.get_order();
-      int assigned_id = m_server->add_order(order);
-      send_msg(Message(MessageType::OK, "Created order id " + std::to_string(assigned_id)), m_fd);
+      //client must use placeholder id=1; reject anything else
+      if (order->get_id() != 1) {
+        send_msg(Message(MessageType::ERROR, "Order id must be 1"), m_fd);
+      } else {
+        int assigned_id = m_server->add_order(order);
+        send_msg(Message(MessageType::OK, "Created order id " + std::to_string(assigned_id)), m_fd);
+      }
 
     } else if (msg.get_type() == MessageType::ITEM_UPDATE) {
       try {
