@@ -18,9 +18,10 @@ class Message;
 // information.
 class Client {
 private:
-  int m_fd; // socket file descriptor for communicating with client
-  Server *m_server; // pointer to Server instance
-  // TODO: add additional fields if needed
+  int m_fd;              // socket file descriptor for communicating with client
+  Server *m_server;      // pointer to Server instance
+  MessageQueue m_msg_queue; //for display client msgs
+  ClientMode m_mode;     //UPDATER or DISPLAY
 
   NO_VALUE_SEMANTICS(Client);
 
@@ -43,10 +44,12 @@ public:
   // is terminated nicely and resources are cleaned up.
   void chat();
 
-  // TODO: more public member functions
-
 private:
-  // TODO: private member functions
+  //handle updater client loop
+  void updater_loop();
+
+  //handle display client loop
+  void display_loop();
 };
 
 #endif // CLIENT_H
